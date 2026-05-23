@@ -1,100 +1,209 @@
-# 技术架构设计文档
+# GameAsset-Forge 架构设计说明
 
-## 1. 技术选型
+## 一、整体架构
 
-- 前端与交互：Streamlit
-- 核心逻辑：Python
-- 图片处理：Pillow
-- 数据存储：JSON 配置文件
-- 可选图像生成：API Provider Adapter
-- 导出功能：zipfile
-- 文档管理：Markdown
+GameAsset-Forge 当前采用轻量级本地 Web Demo 架构：
 
-## 2. 项目模块划分
+    Streamlit 前端页面
+            ↓
+    项目配置 / 素材需求描述
+            ↓
+    Asset Blueprint
+            ↓
+    Style Lock
+            ↓
+    Prompt Composer
+            ↓
+    Demo Asset Generator / API Image Generator
+            ↓
+    Gallery / Quality Checker / Exporter
 
-```text
-core/
-├── blueprint.py          # 素材蓝图生成
-├── style_profile.py      # 风格档案与风格锁定
-├── prompt_composer.py    # Game-aware Prompt 编排
-├── asset_generator.py    # Demo/API 素材生成
-├── quality_checker.py    # 质量检查
-└── exporter.py           # 素材包导出
+该架构适合 MVP 快速验证，后续可以扩展为前后端分离或接入更多图像生成服务。
 
 ---
 
-## 3. 写 `docs/module_plan.md`
+## 二、模块划分
 
-```bash
-cat > docs/module_plan.md <<'EOF'
-# 模块规划文档
+### 1. app.py
 
-## PR 1：初始化项目结构与基础文档
-
-目标：完成项目基础结构和说明文档。
-
-包含内容：
-
-- 创建项目目录结构；
-- 添加基础 Streamlit 页面；
-- 添加 README；
-- 添加 docs 文档骨架；
-- 添加 requirements.txt；
-- 添加 core/data/assets/outputs 等基础目录。
-
-## PR 2：项目配置、素材蓝图和风格锁定
-
-目标：实现用户输入游戏需求，并根据游戏类型生成基础素材清单。
-
-包含内容：
+负责 Streamlit 页面展示和用户交互，包括：
 
 - 项目配置表单；
-- 游戏类型选择；
-- 主题与风格参数；
-- Asset Blueprint 推荐逻辑；
-- Style Profile 风格参数；
-- JSON 模板数据。
-
-## PR 3：素材清单编辑与 Prompt Composer
-
-目标：让用户可以编辑素材清单，并自动生成专业 Prompt。
-
-包含内容：
-
-- 中文素材清单展示；
-- 素材新增、删除、修改；
-- 英文文件名生成；
-- Game-aware Prompt Composer；
-- Prompt 预览与复制。
-
-## PR 4：Demo/API 生成与素材库展示
-
-目标：实现素材生成结果展示和素材库分类管理。
-
-包含内容：
-
-- Demo Mode；
-- API Mode 接口预留；
-- 角色、敌人、道具、地图块、UI、背景分类展示；
-- 素材卡片；
-- Prompt 与素材状态展示。
-
-## PR 5：质量检查、素材包导出和最终文档
-
-目标：完成作品闭环，准备最终提交。
-
-包含内容：
-
+- 素材需求描述输入；
+- Demo/API Mode 选择；
+- API Key、API Base URL、模型名称和输出尺寸配置；
+- 素材清单编辑；
+- Prompt 展示；
+- 素材库展示；
 - 质量检查；
-- manifest.json 生成；
-- zip 素材包导出；
-- README 完善；
-- Demo 视频脚本；
-- 最终提交说明。
+- 素材包导出下载。
 
-## 开发规范
+### 2. core/blueprint.py
 
-- 每个 PR 聚焦一个核心模块；
-- 每个 PR 至少包含 1-2 个有效 commit；
-- PR 标题和描述需要说明功能、实现思路和测试方式；
-- 避免最后一天一次性提交所有代码。
+负责根据游戏类型生成默认素材蓝图。
+
+输入：
+
+    game_type
+
+输出：
+
+    asset_blueprint
+
+### 3. core/style_profile.py
+
+负责根据用户选择的风格、尺寸、视角、背景和色彩主题生成 Style Lock 风格档案。
+
+### 4. core/prompt_composer.py
+
+负责根据素材类型和 Style Lock 生成 Game-aware Prompt。
+
+### 5. core/asset_generator.py
+
+负责在 Demo Mode 下匹配内置素材池。
+
+匹配策略：
+
+1. 精准匹配；
+2. 同类型替代；
+3. 全局替代。
+
+### 6. core/api_image_generator.py
+
+负责在 API Mode 下调用图像生成服务。
+
+核心能力：
+
+- 配置 API Key；
+- 配置 API Base URL；
+- 配置模型名称；
+- 配置输出尺寸；
+- 根据 Base URL 自动选择硅基流动参数或 OpenAI 风格参数；
+- 支持解析 images[].url、data[].url 和 data[].b64_json；
+- 下载或保存生成图片；
+- 输出与 Demo Mode 兼容的素材记录。
+
+### 7. core/quality_checker.py
+
+负责检查素材是否具备基本工程可用性，包括字段完整性、图片路径和 Prompt 记录。
+
+### 8. core/exporter.py
+
+负责将素材复制到结构化目录，并生成：
+
+- manifest.json；
+- README.md；
+- asset_pack.zip。
+
+### 9. tools/generate_demo_assets.py
+
+负责使用 Pillow 程序化生成 36 张 Demo 素材。
+
+---
+
+## 三、数据文件设计
+
+### 1. data/asset_blueprints.json
+
+维护不同游戏类型的默认素材清单。
+
+### 2. data/style_templates.json
+
+维护不同美术风格对应的风格描述。
+
+### 3. data/prompt_templates.json
+
+维护不同素材类型对应的 Prompt 模板。
+
+### 4. data/demo_asset_manifest.json
+
+维护 Demo 素材的路径、类型、显示名称和关键词。
+
+---
+
+## 四、核心数据流
+
+    用户输入项目配置
+            ↓
+    生成默认素材蓝图
+            ↓
+    合并素材需求描述中的补充素材
+            ↓
+    用户编辑素材清单
+            ↓
+    生成 Style Lock
+            ↓
+    生成 Game-aware Prompt
+            ↓
+    Demo Mode 或 API Mode 生成素材
+            ↓
+    展示素材库
+            ↓
+    质量检查
+            ↓
+    导出 ZIP
+
+---
+
+## 五、Demo Mode 与 API Mode
+
+### Demo Mode
+
+Demo Mode 使用内置示例素材池，保证在无 API Key、无网络或无额度的情况下也可以完整演示流程。
+
+优点：
+
+- 稳定；
+- 可复现；
+- 不依赖外部 API；
+- 适合课堂展示和答辩。
+
+限制：
+
+- 图片不一定严格符合全部参数；
+- 美术质量不是商用级。
+
+### API Mode
+
+API Mode 调用真实图像生成服务，根据 Prompt Composer 输出的 Prompt 生成图片。
+
+当前默认配置：
+
+- API Base URL： https://api.siliconflow.cn/v1
+- 默认模型： Tongyi-MAI/Z-Image-Turbo
+- 输出目录： outputs/api_generated/
+
+API Mode 支持两类参数格式：
+
+硅基流动模式：
+
+    image_size
+    batch_size
+    num_inference_steps
+    guidance_scale
+
+OpenAI 兼容模式：
+
+    size
+    n
+    response_format
+
+两种模式生成的素材都会进入同一套 Gallery、Quality Checker 和 Exporter 流程。
+
+---
+
+## 六、导出结构
+
+导出结果为：
+
+    asset_pack/
+    ├── characters/
+    ├── enemies/
+    ├── items/
+    ├── tiles/
+    ├── ui/
+    ├── backgrounds/
+    ├── manifest.json
+    └── README.md
+
+其中 manifest.json 记录素材元数据、Prompt、匹配方式和生成模式。
