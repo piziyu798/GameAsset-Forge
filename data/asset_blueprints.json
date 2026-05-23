@@ -1,0 +1,150 @@
+{
+  "RPG": [
+    {
+      "asset_type": "character",
+      "display_name": "小骑士主角",
+      "description_zh": "戴红色围巾的小骑士，作为玩家控制的主角"
+    },
+    {
+      "asset_type": "character",
+      "display_name": "魔法师角色",
+      "description_zh": "穿着长袍、手持法杖的魔法师角色"
+    },
+    {
+      "asset_type": "character",
+      "display_name": "弓箭手角色",
+      "description_zh": "手持弓箭、适合远程攻击的冒险者角色"
+    },
+    {
+      "asset_type": "enemy",
+      "display_name": "绿色史莱姆",
+      "description_zh": "绿色、圆形、可爱的基础敌人"
+    },
+    {
+      "asset_type": "enemy",
+      "display_name": "森林哥布林",
+      "description_zh": "生活在森林中的小型哥布林敌人"
+    },
+    {
+      "asset_type": "enemy",
+      "display_name": "洞穴蝙蝠",
+      "description_zh": "适合地牢或森林场景的飞行敌人"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "金币",
+      "description_zh": "金色圆形金币，用于奖励和收集"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "红色药水",
+      "description_zh": "红色生命恢复药水"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "钥匙",
+      "description_zh": "用于开门或解锁宝箱的金色钥匙"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "草地地图块",
+      "description_zh": "可拼接的草地地图块"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "石路地图块",
+      "description_zh": "可拼接的石头道路地图块"
+    },
+    {
+      "asset_type": "ui",
+      "display_name": "血条",
+      "description_zh": "显示玩家生命值的 UI 元素"
+    }
+  ],
+  "平台跳跃": [
+    {
+      "asset_type": "character",
+      "display_name": "跳跃主角",
+      "description_zh": "适合平台跳跃游戏的主角角色"
+    },
+    {
+      "asset_type": "enemy",
+      "display_name": "巡逻怪物",
+      "description_zh": "在平台上左右移动的基础敌人"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "金币",
+      "description_zh": "可收集的金币奖励"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "平台地块",
+      "description_zh": "可供角色站立的平台地块"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "尖刺陷阱",
+      "description_zh": "平台跳跃游戏中的危险陷阱"
+    },
+    {
+      "asset_type": "ui",
+      "display_name": "关卡按钮",
+      "description_zh": "用于选择关卡的 UI 按钮"
+    }
+  ],
+  "解谜": [
+    {
+      "asset_type": "character",
+      "display_name": "解谜主角",
+      "description_zh": "适合解谜游戏的玩家角色"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "钥匙",
+      "description_zh": "用于打开机关门的钥匙"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "机关按钮",
+      "description_zh": "触发机关的按钮道具"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "地板砖",
+      "description_zh": "适合解谜场景的地板地图块"
+    },
+    {
+      "asset_type": "ui",
+      "display_name": "提示图标",
+      "description_zh": "用于显示提示信息的 UI 图标"
+    }
+  ],
+  "经营模拟": [
+    {
+      "asset_type": "character",
+      "display_name": "顾客角色",
+      "description_zh": "来到商店消费的顾客角色"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "金币",
+      "description_zh": "经营模拟游戏中的货币图标"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "木质地板",
+      "description_zh": "适合商店或房间场景的木质地板"
+    },
+    {
+      "asset_type": "ui",
+      "display_name": "商店按钮",
+      "description_zh": "进入商店界面的按钮"
+    },
+    {
+      "asset_type": "background",
+      "display_name": "商店背景",
+      "description_zh": "温馨的 2D 商店背景"
+    }
+  ]
+}
