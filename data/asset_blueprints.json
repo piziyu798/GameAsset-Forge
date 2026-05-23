@@ -1,0 +1,332 @@
+{
+  "RPG": [
+    {
+      "asset_type": "character",
+      "display_name": "小骑士主角",
+      "description_zh": "戴红色围巾的小骑士，作为玩家控制的主角"
+    },
+    {
+      "asset_type": "character",
+      "display_name": "魔法师角色",
+      "description_zh": "穿着长袍、手持法杖的魔法师角色"
+    },
+    {
+      "asset_type": "character",
+      "display_name": "弓箭手角色",
+      "description_zh": "手持弓箭、适合远程攻击的冒险者角色"
+    },
+    {
+      "asset_type": "character",
+      "display_name": "女巫角色",
+      "description_zh": "戴尖帽、使用魔法的女巫角色"
+    },
+    {
+      "asset_type": "character",
+      "display_name": "商人角色",
+      "description_zh": "适合城镇或商店场景的 NPC 商人"
+    },
+    {
+      "asset_type": "enemy",
+      "display_name": "绿色史莱姆",
+      "description_zh": "绿色、圆形、可爱的基础敌人"
+    },
+    {
+      "asset_type": "enemy",
+      "display_name": "森林哥布林",
+      "description_zh": "生活在森林中的小型哥布林敌人"
+    },
+    {
+      "asset_type": "enemy",
+      "display_name": "洞穴蝙蝠",
+      "description_zh": "适合地牢或森林场景的飞行敌人"
+    },
+    {
+      "asset_type": "enemy",
+      "display_name": "骷髅敌人",
+      "description_zh": "适合地牢或暗黑场景的骷髅敌人"
+    },
+    {
+      "asset_type": "enemy",
+      "display_name": "幽灵敌人",
+      "description_zh": "半透明、漂浮的幽灵类敌人"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "金币",
+      "description_zh": "金色圆形金币，用于奖励和收集"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "红色药水",
+      "description_zh": "红色生命恢复药水"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "蓝色药水",
+      "description_zh": "蓝色魔法恢复药水"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "金色钥匙",
+      "description_zh": "用于开门或解锁宝箱的金色钥匙"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "宝箱",
+      "description_zh": "用于奖励、探索或掉落物的木质宝箱"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "木剑",
+      "description_zh": "适合新手角色使用的基础武器"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "魔法法杖",
+      "description_zh": "适合法师角色使用的魔法武器"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "草地地图块",
+      "description_zh": "可拼接的草地地图块"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "石路地图块",
+      "description_zh": "可拼接的石头道路地图块"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "水面地图块",
+      "description_zh": "可拼接的水面地图块"
+    },
+    {
+      "asset_type": "ui",
+      "display_name": "血条",
+      "description_zh": "显示玩家生命值的 UI 元素"
+    },
+    {
+      "asset_type": "ui",
+      "display_name": "背包图标",
+      "description_zh": "用于打开背包界面的 UI 图标"
+    },
+    {
+      "asset_type": "background",
+      "display_name": "森林背景",
+      "description_zh": "适合 RPG 冒险场景的森林背景"
+    }
+  ],
+  "平台跳跃": [
+    {
+      "asset_type": "character",
+      "display_name": "跳跃主角",
+      "description_zh": "适合平台跳跃游戏的主角角色"
+    },
+    {
+      "asset_type": "character",
+      "display_name": "忍者角色",
+      "description_zh": "动作灵活、适合跳跃和冲刺的忍者角色"
+    },
+    {
+      "asset_type": "enemy",
+      "display_name": "巡逻怪物",
+      "description_zh": "在平台上左右移动的基础敌人"
+    },
+    {
+      "asset_type": "enemy",
+      "display_name": "蘑菇怪",
+      "description_zh": "适合平台跳跃场景的蘑菇形怪物"
+    },
+    {
+      "asset_type": "enemy",
+      "display_name": "狼形敌人",
+      "description_zh": "速度较快、适合追逐关卡的敌人"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "金币",
+      "description_zh": "可收集的金币奖励"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "红色药水",
+      "description_zh": "用于恢复生命值的道具"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "平台地块",
+      "description_zh": "可供角色站立的平台地块"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "泥土地块",
+      "description_zh": "适合自然关卡的地面地图块"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "尖刺陷阱",
+      "description_zh": "平台跳跃游戏中的危险陷阱"
+    },
+    {
+      "asset_type": "ui",
+      "display_name": "关卡按钮",
+      "description_zh": "用于选择关卡的 UI 按钮"
+    },
+    {
+      "asset_type": "ui",
+      "display_name": "暂停按钮",
+      "description_zh": "用于暂停游戏的 UI 按钮"
+    }
+  ],
+  "解谜": [
+    {
+      "asset_type": "character",
+      "display_name": "解谜主角",
+      "description_zh": "适合解谜游戏的玩家角色"
+    },
+    {
+      "asset_type": "character",
+      "display_name": "机器人角色",
+      "description_zh": "适合机关、实验室或科幻解谜场景的机器人角色"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "金色钥匙",
+      "description_zh": "用于打开机关门的钥匙"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "机关按钮",
+      "description_zh": "触发机关的按钮道具"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "盾牌",
+      "description_zh": "用于防御或触发谜题机制的道具"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "地板砖",
+      "description_zh": "适合解谜场景的地板地图块"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "墙体地图块",
+      "description_zh": "用于构建解谜关卡边界的墙体地图块"
+    },
+    {
+      "asset_type": "ui",
+      "display_name": "提示图标",
+      "description_zh": "用于显示提示信息的 UI 图标"
+    },
+    {
+      "asset_type": "background",
+      "display_name": "地牢背景",
+      "description_zh": "适合机关、迷宫或解谜场景的地牢背景"
+    }
+  ],
+  "经营模拟": [
+    {
+      "asset_type": "character",
+      "display_name": "顾客角色",
+      "description_zh": "来到商店消费的顾客角色"
+    },
+    {
+      "asset_type": "character",
+      "display_name": "商人角色",
+      "description_zh": "负责售卖商品或与玩家交互的商人角色"
+    },
+    {
+      "asset_type": "character",
+      "display_name": "村民角色",
+      "description_zh": "适合城镇或经营模拟场景的普通 NPC"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "金币",
+      "description_zh": "经营模拟游戏中的货币图标"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "宝箱",
+      "description_zh": "用于奖励或库存展示的宝箱道具"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "木质地板",
+      "description_zh": "适合商店或房间场景的木质地板"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "石路地图块",
+      "description_zh": "适合城镇道路的石路地图块"
+    },
+    {
+      "asset_type": "ui",
+      "display_name": "商店按钮",
+      "description_zh": "进入商店界面的按钮"
+    },
+    {
+      "asset_type": "ui",
+      "display_name": "背包图标",
+      "description_zh": "展示物品库存的 UI 图标"
+    },
+    {
+      "asset_type": "background",
+      "display_name": "商店背景",
+      "description_zh": "温馨的 2D 商店背景"
+    },
+    {
+      "asset_type": "background",
+      "display_name": "村庄背景",
+      "description_zh": "适合经营模拟或城镇场景的村庄背景"
+    }
+  ],
+  "科幻动作": [
+    {
+      "asset_type": "character",
+      "display_name": "机器人主角",
+      "description_zh": "适合科幻动作游戏的机器人主角"
+    },
+    {
+      "asset_type": "character",
+      "display_name": "士兵角色",
+      "description_zh": "穿戴轻型护甲的科幻士兵角色"
+    },
+    {
+      "asset_type": "enemy",
+      "display_name": "机器人敌人",
+      "description_zh": "适合科幻场景的机械敌人"
+    },
+    {
+      "asset_type": "enemy",
+      "display_name": "无人机敌人",
+      "description_zh": "悬浮在空中的小型机械敌人"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "能量核心",
+      "description_zh": "发光的科幻能量道具"
+    },
+    {
+      "asset_type": "item",
+      "display_name": "蓝色药水",
+      "description_zh": "可作为能量恢复道具的蓝色药水"
+    },
+    {
+      "asset_type": "tile",
+      "display_name": "金属地板",
+      "description_zh": "适合实验室或飞船场景的金属地板"
+    },
+    {
+      "asset_type": "ui",
+      "display_name": "能量条",
+      "description_zh": "显示能量或护盾值的 UI 条"
+    },
+    {
+      "asset_type": "background",
+      "display_name": "科幻基地背景",
+      "description_zh": "适合科幻动作场景的基地背景"
+    }
+  ]
+}

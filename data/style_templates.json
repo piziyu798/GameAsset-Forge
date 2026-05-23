@@ -1,0 +1,31 @@
+{
+  "像素风": {
+    "style_key": "pixel_art",
+    "style_prompt": "pixel art, limited color palette, crisp edges, clean dark outline, centered 2D game asset, transparent background",
+    "recommended_sizes": ["32x32", "64x64"],
+    "recommended_views": ["俯视角", "侧视角", "正面"],
+    "best_for": ["RPG", "平台跳跃", "解谜", "科幻动作"],
+    "mvp_default": true
+  },
+  "卡通风": {
+    "style_key": "cartoon",
+    "style_prompt": "cartoon game art, bright colors, rounded shapes, clean outline, playful 2D game style",
+    "recommended_sizes": ["128x128", "256x256"],
+    "recommended_views": ["正面", "侧视角"],
+    "best_for": ["经营模拟", "平台跳跃"]
+  },
+  "暗黑幻想风": {
+    "style_key": "dark_fantasy",
+    "style_prompt": "dark fantasy 2D game art, dramatic contrast, mysterious atmosphere, fantasy details, clean silhouette",
+    "recommended_sizes": ["64x64", "128x128"],
+    "recommended_views": ["俯视角", "正面"],
+    "best_for": ["RPG", "解谜"]
+  },
+  "扁平图标风": {
+    "style_key": "flat_icon",
+    "style_prompt": "flat icon style, simple shapes, clean silhouette, minimal 2D game asset, centered composition",
+    "recommended_sizes": ["64x64", "128x128"],
+    "recommended_views": ["正面"],
+    "best_for": ["UI", "道具", "经营模拟"]
+  }
+}
