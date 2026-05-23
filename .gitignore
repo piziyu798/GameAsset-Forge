@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Runtime outputs
+outputs/asset_pack/
+outputs/asset_pack.zip
+outputs/api_generated/

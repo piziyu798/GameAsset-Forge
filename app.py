@@ -4,6 +4,7 @@ import pandas as pd
 import streamlit as st
 
 from core.blueprint import generate_asset_blueprint, get_game_types
+from core.api_image_generator import generate_api_assets
 from core.asset_generator import generate_demo_assets
 from core.exporter import export_asset_pack
 from core.quality_checker import check_assets_quality
@@ -354,7 +355,43 @@ if generation_mode == "Demo Mode":
     )
 else:
     st.warning(
-        "API Mode 需要配置图像生成 API Key。当前版本先保留入口，后续可根据 Prompt 调用真实图像生成模型。"
+        "当前为 API Mode：系统会根据 Prompt Composer 结果调用图像生成 API。"
+        "请确认 API Key、Base URL 和模型名称配置正确。"
+    )
+
+    api_col1, api_col2 = st.columns(2)
+
+    with api_col1:
+        api_base_url = st.text_input(
+            "API Base URL",
+            value="https://api.siliconflow.cn/v1",
+            help="填写兼容 /images/generations 的图像生成 API 地址，例如 https://api.openai.com/v1 或其他兼容服务地址。"
+        )
+        api_model = st.text_input(
+            "图像生成模型",
+            value="Tongyi-MAI/Z-Image-Turbo",
+            help="填写图像生成模型名称。不同服务商的模型名称可能不同。"
+        )
+
+    with api_col2:
+        api_key = st.text_input(
+            "API Key",
+            value="",
+            type="password",
+            help="请输入图像生成 API Key。不要将 API Key 提交到 GitHub。"
+        )
+        api_size = st.selectbox(
+            "API 输出尺寸",
+            ["1024x1024", "512x512", "256x256"],
+            index=0
+        )
+
+    max_api_assets = st.slider(
+        "本次最多生成素材数量",
+        min_value=1,
+        max_value=12,
+        value=6,
+        help="API 生成会消耗额度，建议先少量测试。"
     )
 
 st.divider()
@@ -460,17 +497,39 @@ if "composed_prompts" in st.session_state:
         "如需生成与描述高度一致的真实图片，可在后续 API Mode 中调用图像生成模型。"
     )
 
-    if st.button("生成 Demo 素材"):
-        demo_assets = generate_demo_assets(
-            st.session_state.get("asset_blueprint", []),
-            st.session_state.get("composed_prompts", [])
-        )
-        st.session_state["demo_assets"] = demo_assets
+    if generation_mode == "Demo Mode":
+        generate_button_label = "生成 Demo 素材"
+    else:
+        generate_button_label = "生成 API 素材"
+
+    if st.button(generate_button_label):
+        if generation_mode == "Demo Mode":
+            generated_assets = generate_demo_assets(
+                st.session_state.get("asset_blueprint", []),
+                st.session_state.get("composed_prompts", [])
+            )
+            st.session_state["demo_assets"] = generated_assets
+        else:
+            try:
+                generated_assets = generate_api_assets(
+                    asset_list=st.session_state.get("asset_blueprint", []),
+                    prompts=st.session_state.get("composed_prompts", []),
+                    api_key=api_key,
+                    base_url=api_base_url,
+                    model=api_model,
+                    size=api_size,
+                    max_assets=max_api_assets
+                )
+                st.session_state["demo_assets"] = generated_assets
+                st.success("API 素材生成完成。")
+            except Exception as e:
+                st.error(f"API Mode 生成失败：{e}")
+                st.info("你可以切换回 Demo Mode，使用内置素材池继续完成演示流程。")
 
 if "demo_assets" in st.session_state:
-    st.markdown('<div class="panel-title">Step 6：Demo 素材库</div>', unsafe_allow_html=True)
+    st.markdown('<div class="panel-title">Step 6：素材库</div>', unsafe_allow_html=True)
     st.markdown(
-        '<div class="panel-desc">以下素材由 Demo Mode 根据当前素材清单匹配内置素材池生成，用于稳定展示完整工作流。</div>',
+        '<div class="panel-desc">以下素材由当前生成模式生成，可按角色、敌人、道具、地图块、UI 和背景分类查看。</div>',
         unsafe_allow_html=True
     )
 
