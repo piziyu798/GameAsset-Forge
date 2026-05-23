@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 
 from core.blueprint import generate_asset_blueprint, get_game_types
+from core.prompt_composer import compose_prompts
 from core.style_profile import build_style_profile, get_style_names
 
 
@@ -14,67 +15,123 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    .main-title {
-        font-size: 44px;
-        font-weight: 800;
-        margin-bottom: 8px;
-        color: #ffffff;
+    .block-container {
+        padding-top: 2.5rem;
+        padding-bottom: 3rem;
+        max-width: 1200px;
     }
-    .subtitle {
-        font-size: 18px;
-        color: #C9D1D9;
-        line-height: 1.7;
+
+    .hero {
+        border: 1px solid #2B3142;
+        background: #151922;
+        border-radius: 18px;
+        padding: 28px 32px;
         margin-bottom: 24px;
     }
-    .feature-card {
-        background: #1F2430;
-        padding: 18px 20px;
-        border-radius: 16px;
-        border: 1px solid #2F3545;
-        min-height: 120px;
-    }
-    .feature-title {
-        font-size: 18px;
-        font-weight: 700;
+
+    .hero-title {
+        font-size: 42px;
+        font-weight: 800;
+        color: #F8FAFC;
         margin-bottom: 8px;
-        color: #ffffff;
+        letter-spacing: -0.5px;
     }
-    .feature-desc {
+
+    .hero-subtitle {
+        font-size: 17px;
         color: #B8C0CC;
-        font-size: 14px;
-        line-height: 1.6;
+        line-height: 1.7;
+        max-width: 900px;
     }
-    .section-label {
+
+    .tag-row {
+        margin-top: 18px;
+    }
+
+    .tag {
+        display: inline-block;
+        border: 1px solid #3A4256;
+        border-radius: 999px;
+        padding: 6px 12px;
+        margin-right: 8px;
+        color: #D8DEE9;
+        background: #1E2430;
+        font-size: 13px;
+    }
+
+    .panel-title {
         font-size: 26px;
         font-weight: 800;
-        margin-top: 24px;
-        margin-bottom: 12px;
+        color: #F8FAFC;
+        margin-top: 10px;
+        margin-bottom: 8px;
     }
-    div.stButton > button:first-child {
-        background: linear-gradient(90deg, #FF4B4B, #FF7A59);
-        color: white;
-        border: none;
-        border-radius: 12px;
-        padding: 0.75rem 1.25rem;
-        font-weight: 700;
+
+    .panel-desc {
+        color: #AEB7C4;
+        margin-bottom: 18px;
+        line-height: 1.6;
+    }
+
+    .mini-card {
+        border: 1px solid #2B3142;
+        background: #151922;
+        border-radius: 14px;
+        padding: 16px 18px;
+        min-height: 108px;
+    }
+
+    .mini-card-title {
+        color: #F8FAFC;
         font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 6px;
     }
-    div.stButton > button:first-child:hover {
-        background: linear-gradient(90deg, #FF6B6B, #FF8A65);
+
+    .mini-card-text {
+        color: #AEB7C4;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    div.stButton > button:first-child {
+        background: #EF4444;
         color: white;
-        border: none;
+        border: 1px solid #F87171;
+        border-radius: 10px;
+        padding: 0.7rem 1.2rem;
+        font-weight: 700;
+    }
+
+    div.stButton > button:first-child:hover {
+        background: #F97316;
+        color: white;
+        border: 1px solid #FDBA74;
+    }
+
+    hr {
+        border-color: #2B3142;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-st.markdown('<div class="main-title">🎮 GameAsset Forge</div>', unsafe_allow_html=True)
 st.markdown(
     """
-    <div class="subtitle">
-    面向学生团队和独立开发者的 2D 游戏素材生成工作台。<br>
-    从“AI 绘图”升级为“AI 游戏素材工作流”：先理解游戏需求，再生成素材蓝图、锁定风格，并为后续 Prompt 编排和素材导出打基础。
+    <div class="hero">
+        <div class="hero-title">🎮 GameAsset Forge</div>
+        <div class="hero-subtitle">
+            面向学生团队和独立开发者的 2D 游戏素材生成工作台。
+            当前 MVP 支持“项目配置 → 素材蓝图 → 清单编辑 → Prompt 编排”，
+            为后续 Demo/API 生成和素材包导出提供基础。
+        </div>
+        <div class="tag-row">
+            <span class="tag">Asset Blueprint</span>
+            <span class="tag">Style Lock</span>
+            <span class="tag">Prompt Composer</span>
+            <span class="tag">2D Game Assets</span>
+        </div>
     </div>
     """,
     unsafe_allow_html=True
@@ -85,9 +142,11 @@ card1, card2, card3 = st.columns(3)
 with card1:
     st.markdown(
         """
-        <div class="feature-card">
-            <div class="feature-title">Asset Blueprint</div>
-            <div class="feature-desc">根据游戏类型自动推荐角色、敌人、道具、地图块和 UI 等基础素材，帮助用户快速明确 Demo 所需资源。</div>
+        <div class="mini-card">
+            <div class="mini-card-title">素材蓝图</div>
+            <div class="mini-card-text">
+                根据游戏类型推荐角色、敌人、道具、地图块、UI 和背景等基础素材。
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -96,9 +155,11 @@ with card1:
 with card2:
     st.markdown(
         """
-        <div class="feature-card">
-            <div class="feature-title">Style Lock</div>
-            <div class="feature-desc">统一控制画风、尺寸、视角、背景和色彩主题，降低 AI 生成素材风格不一致的问题。</div>
+        <div class="mini-card">
+            <div class="mini-card-title">清单编辑</div>
+            <div class="mini-card-text">
+                用户可以修改素材名称、类型、描述和是否生成，避免系统清单过于固定。
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -107,9 +168,11 @@ with card2:
 with card3:
     st.markdown(
         """
-        <div class="feature-card">
-            <div class="feature-title">Game-aware Prompt</div>
-            <div class="feature-desc">后续将根据素材用途自动生成更符合 2D 游戏开发场景的专业 Prompt，而不是简单拼接用户输入。</div>
+        <div class="mini-card">
+            <div class="mini-card-title">Prompt 编排</div>
+            <div class="mini-card-text">
+                按素材用途自动生成更适合 2D 游戏素材的英文 Prompt。
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -117,7 +180,11 @@ with card3:
 
 st.divider()
 
-st.markdown('<div class="section-label">Step 1：项目配置</div>', unsafe_allow_html=True)
+st.markdown('<div class="panel-title">Step 1：项目配置</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="panel-desc">填写游戏基础信息，系统会据此生成素材蓝图和 Style Lock 风格档案。</div>',
+    unsafe_allow_html=True
+)
 
 col1, col2 = st.columns(2)
 
@@ -138,9 +205,7 @@ color_theme = st.selectbox("色彩主题", ["森林绿", "冰雪蓝", "暗黑紫
 
 st.divider()
 
-generate_clicked = st.button("生成素材蓝图与风格档案")
-
-if generate_clicked:
+if st.button("生成素材蓝图与风格档案"):
     asset_blueprint = generate_asset_blueprint(game_type)
     style_profile = build_style_profile(
         style_name=style_name,
@@ -157,43 +222,69 @@ if generate_clicked:
     }
     st.session_state["asset_blueprint"] = asset_blueprint
     st.session_state["style_profile"] = style_profile
+    st.session_state.pop("composed_prompts", None)
 
 if "project_config" in st.session_state:
-    st.markdown('<div class="section-label">Step 2：项目配置结果</div>', unsafe_allow_html=True)
-    st.json(st.session_state["project_config"], expanded=True)
+    st.markdown('<div class="panel-title">Step 2：项目配置结果</div>', unsafe_allow_html=True)
+    st.json(st.session_state["project_config"], expanded=False)
 
 if "style_profile" in st.session_state:
-    st.markdown('<div class="section-label">Step 3：Style Lock 风格档案</div>', unsafe_allow_html=True)
-    st.json(st.session_state["style_profile"], expanded=True)
+    st.markdown('<div class="panel-title">Step 3：Style Lock 风格档案</div>', unsafe_allow_html=True)
+    st.json(st.session_state["style_profile"], expanded=False)
 
 if "asset_blueprint" in st.session_state:
-    st.markdown('<div class="section-label">Step 4：Asset Blueprint 素材蓝图</div>', unsafe_allow_html=True)
+    st.markdown('<div class="panel-title">Step 4：素材清单编辑</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="panel-desc">你可以直接修改素材名称、类型、描述和是否生成。后续系统会根据编辑后的清单生成 Prompt。</div>',
+        unsafe_allow_html=True
+    )
 
     df = pd.DataFrame(st.session_state["asset_blueprint"])
 
-    type_map = {
-        "character": "角色",
-        "enemy": "敌人",
-        "item": "道具",
-        "tile": "地图块",
-        "ui": "UI",
-        "background": "背景",
-        "other": "其他"
-    }
+    edited_df = st.data_editor(
+        df,
+        use_container_width=True,
+        hide_index=True,
+        num_rows="dynamic",
+        column_config={
+            "asset_id": st.column_config.TextColumn("素材 ID", disabled=True),
+            "asset_type": st.column_config.SelectboxColumn(
+                "素材类型",
+                options=["character", "enemy", "item", "tile", "ui", "background", "other"],
+                required=True
+            ),
+            "display_name": st.column_config.TextColumn("素材名称", required=True),
+            "description_zh": st.column_config.TextColumn("素材描述"),
+            "selected": st.column_config.CheckboxColumn("是否生成"),
+            "status": st.column_config.TextColumn("状态")
+        }
+    )
 
-    if "asset_type" in df.columns:
-        df["asset_type_zh"] = df["asset_type"].map(type_map).fillna(df["asset_type"])
+    st.session_state["asset_blueprint"] = edited_df.to_dict(orient="records")
 
-    display_columns = [
-        "asset_id",
-        "asset_type_zh",
-        "display_name",
-        "description_zh",
-        "selected",
-        "status"
-    ]
+    st.info(
+        "当前为 Prompt Composer 阶段：系统会根据素材类型、素材描述和 Style Lock 风格档案生成英文 Prompt。"
+    )
 
-    available_columns = [col for col in display_columns if col in df.columns]
-    st.dataframe(df[available_columns], use_container_width=True, hide_index=True)
+    if st.button("生成 Game-aware Prompt"):
+        prompts = compose_prompts(
+            st.session_state["asset_blueprint"],
+            st.session_state["style_profile"]
+        )
+        st.session_state["composed_prompts"] = prompts
 
-    st.success("素材蓝图已生成。后续 PR 将支持素材清单编辑、Prompt 自动生成、Demo/API 生成和素材包导出。")
+if "composed_prompts" in st.session_state:
+    st.markdown('<div class="panel-title">Step 5：Prompt Composer 结果</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="panel-desc">这些 Prompt 将在后续 PR 中用于 Demo/API 图片生成。</div>',
+        unsafe_allow_html=True
+    )
+
+    prompt_df = pd.DataFrame(st.session_state["composed_prompts"])
+    st.dataframe(prompt_df, use_container_width=True, hide_index=True)
+
+    with st.expander("查看第一条 Prompt 示例"):
+        if not prompt_df.empty:
+            st.code(prompt_df.iloc[0]["prompt"], language="text")
+            st.caption("Negative Prompt")
+            st.code(prompt_df.iloc[0]["negative_prompt"], language="text")

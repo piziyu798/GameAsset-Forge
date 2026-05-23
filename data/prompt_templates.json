@@ -1,0 +1,37 @@
+{
+  "character": {
+    "type_name_zh": "角色",
+    "prompt_pattern": "2D game character sprite of {display_name}, {description_zh}, {style_prompt}, {view}, {size}, full body, centered composition, transparent background, clean silhouette, game-ready asset",
+    "negative_prompt": "blurry, realistic photo, complex background, low quality, text, watermark, extra limbs"
+  },
+  "enemy": {
+    "type_name_zh": "敌人",
+    "prompt_pattern": "2D game enemy sprite of {display_name}, {description_zh}, {style_prompt}, {view}, {size}, centered composition, transparent background, readable silhouette, game-ready asset",
+    "negative_prompt": "blurry, realistic photo, complex background, low quality, text, watermark, extra limbs"
+  },
+  "item": {
+    "type_name_zh": "道具",
+    "prompt_pattern": "2D game item icon of {display_name}, {description_zh}, {style_prompt}, {size}, centered icon, transparent background, clean outline, readable shape, game-ready asset",
+    "negative_prompt": "blurry, realistic photo, complex background, low quality, text, watermark"
+  },
+  "tile": {
+    "type_name_zh": "地图块",
+    "prompt_pattern": "2D game tile asset of {display_name}, {description_zh}, {style_prompt}, {view}, {size}, tileable, seamless edges, clean pattern, game-ready tileset asset",
+    "negative_prompt": "blurry, realistic photo, perspective distortion, text, watermark, messy pattern"
+  },
+  "ui": {
+    "type_name_zh": "UI",
+    "prompt_pattern": "2D game UI element of {display_name}, {description_zh}, {style_prompt}, {size}, clean interface element, readable shape, centered composition, transparent background, game-ready UI asset",
+    "negative_prompt": "blurry, realistic photo, unreadable text, watermark, complex background"
+  },
+  "background": {
+    "type_name_zh": "背景",
+    "prompt_pattern": "2D game background of {display_name}, {description_zh}, {style_prompt}, wide composition, atmospheric scene, clean layers, game-ready background",
+    "negative_prompt": "blurry, realistic photo, watermark, messy details, unreadable text"
+  },
+  "other": {
+    "type_name_zh": "其他",
+    "prompt_pattern": "2D game asset of {display_name}, {description_zh}, {style_prompt}, {size}, centered composition, clean outline, game-ready asset",
+    "negative_prompt": "blurry, realistic photo, watermark, complex background"
+  }
+}
