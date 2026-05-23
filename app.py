@@ -1,10 +1,116 @@
+from pathlib import Path
+
 import pandas as pd
 import streamlit as st
 
 from core.blueprint import generate_asset_blueprint, get_game_types
 from core.asset_generator import generate_demo_assets
+from core.exporter import export_asset_pack
+from core.quality_checker import check_assets_quality
 from core.prompt_composer import compose_prompts
 from core.style_profile import build_style_profile, get_style_names
+
+
+def infer_asset_type_from_text(name: str) -> str:
+    """Infer asset type from simple Chinese keywords."""
+    name = str(name).strip()
+
+    if any(k in name for k in ["主角", "角色", "骑士", "法师", "魔法师", "弓箭手", "机器人", "忍者", "女巫", "商人", "村民", "士兵"]):
+        return "character"
+
+    if any(k in name for k in ["敌人", "怪", "怪物", "史莱姆", "哥布林", "蝙蝠", "骷髅", "幽灵", "狼", "蘑菇怪"]):
+        return "enemy"
+
+    if any(k in name for k in ["金币", "药水", "钥匙", "宝箱", "剑", "法杖", "盾牌", "道具", "能量核心"]):
+        return "item"
+
+    if any(k in name for k in ["地图块", "地块", "草地", "石路", "泥土", "水面", "墙体", "平台", "陷阱", "地板"]):
+        return "tile"
+
+    if any(k in name for k in ["按钮", "血条", "能量条", "背包", "暂停", "UI", "图标", "提示"]):
+        return "ui"
+
+    if any(k in name for k in ["背景", "森林", "地牢", "村庄", "城镇", "商店", "基地"]):
+        return "background"
+
+    return "other"
+
+
+def split_asset_requirement(requirement: str) -> list:
+    """Split requirement text into rough asset names."""
+    if not requirement:
+        return []
+
+    separators = ["，", "、", "。", "\n", ";", "；", ","]
+
+    text = requirement
+    for sep in separators:
+        text = text.replace(sep, "\n")
+
+    stop_words = [
+        "我想做一个",
+        "我想要",
+        "我需要",
+        "需要",
+        "生成",
+        "制作",
+        "一个",
+        "一张",
+        "一些",
+        "和",
+        "以及",
+        "还有",
+        "的"
+    ]
+
+    results = []
+
+    for line in text.splitlines():
+        item = line.strip()
+        if not item:
+            continue
+
+        for word in stop_words:
+            item = item.replace(word, "")
+
+        item = item.strip()
+
+        if len(item) >= 2:
+            results.append(item)
+
+    return results
+
+
+def build_custom_assets_from_requirement(requirement: str, existing_assets: list) -> list:
+    """Build custom asset records from requirement text."""
+    existing_names = {
+        str(item.get("display_name", "")).strip()
+        for item in existing_assets
+    }
+
+    asset_names = split_asset_requirement(requirement)
+    custom_assets = []
+    start_index = len(existing_assets) + 1
+
+    for name in asset_names:
+        if not name or name in existing_names:
+            continue
+
+        asset_type = infer_asset_type_from_text(name)
+
+        custom_assets.append({
+            "asset_id": f"custom_{start_index:03d}",
+            "asset_type": asset_type,
+            "display_name": name,
+            "description_zh": f"用户补充素材：{name}",
+            "selected": True,
+            "status": "自定义"
+        })
+
+        existing_names.add(name)
+        start_index += 1
+
+    return custom_assets
 
 
 st.set_page_config(
@@ -201,6 +307,35 @@ with col2:
     size = st.selectbox("素材尺寸", ["32x32", "64x64", "128x128", "256x256"], index=1)
     view = st.selectbox("游戏视角", ["俯视角", "侧视角", "等距视角", "正面"], index=0)
 
+st.markdown(
+    """
+    <div style="
+        margin-top: 12px;
+        margin-bottom: 8px;
+        padding: 12px 16px;
+        border: 1px solid #334155;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #141A24 0%, #1B2230 100%);
+    ">
+        <div style="font-size: 18px; font-weight: 800; color: #F8FAFC; margin-bottom: 4px;">
+            素材需求描述
+        </div>
+        <div style="font-size: 13px; color: #AEB7C4; line-height: 1.5;">
+            填写希望生成的具体素材，系统会与默认素材蓝图合并后生成 Prompt。
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+asset_requirement = st.text_area(
+    "填写素材名称",
+    value="骑士主角、忍者角色、女巫角色、绿色史莱姆、金币、红色药水、草地地图块、森林背景",
+    height=90,
+    label_visibility="collapsed",
+    help="可以用顿号、逗号或换行分隔素材，例如：骑士主角、绿色史莱姆、金币、森林背景。"
+)
+
 background = st.radio("背景要求", ["透明背景", "简单背景"], horizontal=True)
 color_theme = st.selectbox("色彩主题", ["森林绿", "冰雪蓝", "暗黑紫", "沙漠黄", "科幻霓虹"], index=0)
 
@@ -226,6 +361,12 @@ st.divider()
 
 if st.button("生成素材蓝图与风格档案"):
     asset_blueprint = generate_asset_blueprint(game_type)
+    custom_assets = build_custom_assets_from_requirement(
+        asset_requirement,
+        asset_blueprint
+    )
+    merged_asset_blueprint = asset_blueprint + custom_assets
+
     style_profile = build_style_profile(
         style_name=style_name,
         size=size,
@@ -237,11 +378,16 @@ if st.button("生成素材蓝图与风格档案"):
     st.session_state["project_config"] = {
         "project_name": project_name,
         "game_type": game_type,
-        "theme": theme
+        "theme": theme,
+        "asset_requirement": asset_requirement,
+        "custom_asset_count": len(custom_assets)
     }
-    st.session_state["asset_blueprint"] = asset_blueprint
+    st.session_state["asset_blueprint"] = merged_asset_blueprint
     st.session_state["style_profile"] = style_profile
     st.session_state.pop("composed_prompts", None)
+    st.session_state.pop("demo_assets", None)
+    st.session_state.pop("quality_report", None)
+    st.session_state.pop("export_zip_path", None)
 
 if "project_config" in st.session_state:
     st.markdown('<div class="panel-title">Step 2：项目配置结果</div>', unsafe_allow_html=True)
@@ -374,3 +520,51 @@ if "demo_assets" in st.session_state:
 
                     with st.expander("查看 Prompt"):
                         st.code(asset.get("prompt", ""), language="text")
+
+    st.divider()
+    st.markdown('<div class="panel-title">Step 7：质量检查与导出</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="panel-desc">检查素材包是否具备基本工程可用性，并导出结构化 asset_pack.zip。</div>',
+        unsafe_allow_html=True
+    )
+
+    col_check, col_export = st.columns(2)
+
+    with col_check:
+        if st.button("进行质量检查"):
+            quality_report = check_assets_quality(demo_assets)
+            st.session_state["quality_report"] = quality_report
+
+    with col_export:
+        if st.button("导出素材包 ZIP"):
+            zip_path = export_asset_pack(demo_assets)
+            st.session_state["export_zip_path"] = str(zip_path)
+
+    if "quality_report" in st.session_state:
+        report = st.session_state["quality_report"]
+        metric_col1, metric_col2, metric_col3, metric_col4 = st.columns(4)
+        metric_col1.metric("素材总数", report["total"])
+        metric_col2.metric("通过", report["passed"])
+        metric_col3.metric("未通过", report["failed"])
+        metric_col4.metric("提醒项", report["warning_count"])
+
+        quality_df = pd.DataFrame(report["details"])
+        st.dataframe(quality_df, use_container_width=True, hide_index=True)
+
+    if "export_zip_path" in st.session_state:
+        zip_path = st.session_state["export_zip_path"]
+        st.success("素材包已生成，可以点击下方按钮下载。")
+        st.caption(f"本地导出路径：{zip_path}")
+
+        zip_file = Path(zip_path)
+        if zip_file.exists():
+            with zip_file.open("rb") as f:
+                st.download_button(
+                    label="⬇️ 下载 asset_pack.zip",
+                    data=f,
+                    file_name="asset_pack.zip",
+                    mime="application/zip",
+                    use_container_width=True
+                )
+        else:
+            st.error("未找到导出的 ZIP 文件，请重新点击导出按钮。")
