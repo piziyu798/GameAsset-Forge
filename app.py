@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 
 from core.blueprint import generate_asset_blueprint, get_game_types
+from core.asset_generator import generate_demo_assets
 from core.prompt_composer import compose_prompts
 from core.style_profile import build_style_profile, get_style_names
 
@@ -203,6 +204,24 @@ with col2:
 background = st.radio("背景要求", ["透明背景", "简单背景"], horizontal=True)
 color_theme = st.selectbox("色彩主题", ["森林绿", "冰雪蓝", "暗黑紫", "沙漠黄", "科幻霓虹"], index=0)
 
+generation_mode = st.radio(
+    "生成模式",
+    ["Demo Mode", "API Mode"],
+    horizontal=True,
+    help="Demo Mode 使用内置示例素材稳定展示流程；API Mode 用于后续根据 Prompt 调用真实图像生成模型。"
+)
+
+if generation_mode == "Demo Mode":
+    st.info(
+        "当前为 Demo Mode：系统会根据素材名称和类型匹配内置示例素材。"
+        "美术风格、尺寸、视角、背景和色彩主题会进入 Style Lock 与 Prompt，"
+        "但不会强制改变内置 Demo 图片。若需要图片严格符合这些参数，请使用 API Mode。"
+    )
+else:
+    st.warning(
+        "API Mode 需要配置图像生成 API Key。当前版本先保留入口，后续可根据 Prompt 调用真实图像生成模型。"
+    )
+
 st.divider()
 
 if st.button("生成素材蓝图与风格档案"):
@@ -288,3 +307,70 @@ if "composed_prompts" in st.session_state:
             st.code(prompt_df.iloc[0]["prompt"], language="text")
             st.caption("Negative Prompt")
             st.code(prompt_df.iloc[0]["negative_prompt"], language="text")
+
+    st.info(
+        "当前为 Demo Mode：系统会优先根据素材名称和类型匹配内置示例素材；"
+        "如果没有完全匹配的图片，会使用同类型素材完成流程演示。"
+        "如需生成与描述高度一致的真实图片，可在后续 API Mode 中调用图像生成模型。"
+    )
+
+    if st.button("生成 Demo 素材"):
+        demo_assets = generate_demo_assets(
+            st.session_state.get("asset_blueprint", []),
+            st.session_state.get("composed_prompts", [])
+        )
+        st.session_state["demo_assets"] = demo_assets
+
+if "demo_assets" in st.session_state:
+    st.markdown('<div class="panel-title">Step 6：Demo 素材库</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="panel-desc">以下素材由 Demo Mode 根据当前素材清单匹配内置素材池生成，用于稳定展示完整工作流。</div>',
+        unsafe_allow_html=True
+    )
+
+    demo_assets = st.session_state["demo_assets"]
+
+    type_labels = {
+        "all": "全部",
+        "character": "角色",
+        "enemy": "敌人",
+        "item": "道具",
+        "tile": "地图块",
+        "ui": "UI",
+        "background": "背景",
+        "other": "其他"
+    }
+
+    available_types = ["all", "character", "enemy", "item", "tile", "ui", "background"]
+    tabs = st.tabs([type_labels.get(t, t) for t in available_types])
+
+    for tab, asset_type in zip(tabs, available_types):
+        with tab:
+            if asset_type == "all":
+                filtered_assets = demo_assets
+            else:
+                filtered_assets = [
+                    item for item in demo_assets
+                    if item.get("asset_type") == asset_type
+                ]
+
+            if not filtered_assets:
+                st.caption("当前分类暂无素材。")
+                continue
+
+            cols = st.columns(3)
+
+            for index, asset in enumerate(filtered_assets):
+                with cols[index % 3]:
+                    image_path = asset.get("image_path", "")
+                    if image_path:
+                        st.image(image_path, use_container_width=True)
+
+                    st.markdown(f"**{asset.get('display_name', '未命名素材')}**")
+                    st.caption(f"类型：{type_labels.get(asset.get('asset_type'), asset.get('asset_type'))}")
+                    st.caption(f"生成模式：{asset.get('generation_mode')}")
+                    st.caption(f"匹配方式：{asset.get('match_strategy')}")
+                    st.caption(f"Demo 图片：{asset.get('demo_display_name')}")
+
+                    with st.expander("查看 Prompt"):
+                        st.code(asset.get("prompt", ""), language="text")

@@ -176,6 +176,11 @@
       "asset_type": "ui",
       "display_name": "暂停按钮",
       "description_zh": "用于暂停游戏的 UI 按钮"
+    },
+    {
+      "asset_type": "background",
+      "display_name": "森林背景",
+      "description_zh": "适合平台跳跃关卡的森林背景"
     }
   ],
   "解谜": [
