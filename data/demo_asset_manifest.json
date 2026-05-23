@@ -1,0 +1,259 @@
+[
+  {
+    "asset_key": "knight_hero",
+    "asset_type": "character",
+    "display_name": "小骑士主角",
+    "file_path": "assets/demo_samples/characters/knight_hero.png",
+    "keywords": ["骑士", "小骑士", "主角", "战士", "knight", "hero", "warrior"]
+  },
+  {
+    "asset_key": "mage_character",
+    "asset_type": "character",
+    "display_name": "魔法师角色",
+    "file_path": "assets/demo_samples/characters/mage_character.png",
+    "keywords": ["魔法师", "法师", "魔法", "mage", "wizard"]
+  },
+  {
+    "asset_key": "archer_character",
+    "asset_type": "character",
+    "display_name": "弓箭手角色",
+    "file_path": "assets/demo_samples/characters/archer_character.png",
+    "keywords": ["弓箭手", "射手", "弓", "archer", "bow"]
+  },
+  {
+    "asset_key": "robot_character",
+    "asset_type": "character",
+    "display_name": "机器人角色",
+    "file_path": "assets/demo_samples/characters/robot_character.png",
+    "keywords": ["机器人", "机械", "robot", "mecha"]
+  },
+  {
+    "asset_key": "ninja_character",
+    "asset_type": "character",
+    "display_name": "忍者角色",
+    "file_path": "assets/demo_samples/characters/ninja_character.png",
+    "keywords": ["忍者", "刺客", "ninja", "assassin"]
+  },
+  {
+    "asset_key": "witch_character",
+    "asset_type": "character",
+    "display_name": "女巫角色",
+    "file_path": "assets/demo_samples/characters/witch_character.png",
+    "keywords": ["女巫", "巫师", "witch"]
+  },
+  {
+    "asset_key": "merchant_character",
+    "asset_type": "character",
+    "display_name": "商人角色",
+    "file_path": "assets/demo_samples/characters/merchant_character.png",
+    "keywords": ["商人", "店主", "merchant", "shopkeeper"]
+  },
+  {
+    "asset_key": "villager_character",
+    "asset_type": "character",
+    "display_name": "村民角色",
+    "file_path": "assets/demo_samples/characters/villager_character.png",
+    "keywords": ["村民", "居民", "npc", "villager"]
+  },
+
+  {
+    "asset_key": "green_slime",
+    "asset_type": "enemy",
+    "display_name": "绿色史莱姆",
+    "file_path": "assets/demo_samples/enemies/green_slime.png",
+    "keywords": ["史莱姆", "绿色史莱姆", "slime"]
+  },
+  {
+    "asset_key": "forest_goblin",
+    "asset_type": "enemy",
+    "display_name": "森林哥布林",
+    "file_path": "assets/demo_samples/enemies/forest_goblin.png",
+    "keywords": ["哥布林", "森林哥布林", "goblin"]
+  },
+  {
+    "asset_key": "cave_bat",
+    "asset_type": "enemy",
+    "display_name": "洞穴蝙蝠",
+    "file_path": "assets/demo_samples/enemies/cave_bat.png",
+    "keywords": ["蝙蝠", "洞穴蝙蝠", "bat"]
+  },
+  {
+    "asset_key": "skeleton_enemy",
+    "asset_type": "enemy",
+    "display_name": "骷髅敌人",
+    "file_path": "assets/demo_samples/enemies/skeleton_enemy.png",
+    "keywords": ["骷髅", "骨头", "skeleton"]
+  },
+  {
+    "asset_key": "mushroom_monster",
+    "asset_type": "enemy",
+    "display_name": "蘑菇怪",
+    "file_path": "assets/demo_samples/enemies/mushroom_monster.png",
+    "keywords": ["蘑菇怪", "蘑菇", "mushroom"]
+  },
+  {
+    "asset_key": "wolf_enemy",
+    "asset_type": "enemy",
+    "display_name": "狼形敌人",
+    "file_path": "assets/demo_samples/enemies/wolf_enemy.png",
+    "keywords": ["狼", "狼形敌人", "wolf"]
+  },
+  {
+    "asset_key": "ghost_enemy",
+    "asset_type": "enemy",
+    "display_name": "幽灵敌人",
+    "file_path": "assets/demo_samples/enemies/ghost_enemy.png",
+    "keywords": ["幽灵", "鬼魂", "ghost"]
+  },
+  {
+    "asset_key": "robot_enemy",
+    "asset_type": "enemy",
+    "display_name": "机器人敌人",
+    "file_path": "assets/demo_samples/enemies/robot_enemy.png",
+    "keywords": ["机器人敌人", "机械敌人", "robot enemy"]
+  },
+
+  {
+    "asset_key": "gold_coin",
+    "asset_type": "item",
+    "display_name": "金币",
+    "file_path": "assets/demo_samples/items/gold_coin.png",
+    "keywords": ["金币", "硬币", "coin", "gold"]
+  },
+  {
+    "asset_key": "red_potion",
+    "asset_type": "item",
+    "display_name": "红色药水",
+    "file_path": "assets/demo_samples/items/red_potion.png",
+    "keywords": ["红色药水", "生命药水", "红药水", "red potion", "health potion"]
+  },
+  {
+    "asset_key": "blue_potion",
+    "asset_type": "item",
+    "display_name": "蓝色药水",
+    "file_path": "assets/demo_samples/items/blue_potion.png",
+    "keywords": ["蓝色药水", "魔法药水", "蓝药水", "blue potion", "mana potion"]
+  },
+  {
+    "asset_key": "golden_key",
+    "asset_type": "item",
+    "display_name": "金色钥匙",
+    "file_path": "assets/demo_samples/items/golden_key.png",
+    "keywords": ["钥匙", "金色钥匙", "key"]
+  },
+  {
+    "asset_key": "treasure_chest",
+    "asset_type": "item",
+    "display_name": "宝箱",
+    "file_path": "assets/demo_samples/items/treasure_chest.png",
+    "keywords": ["宝箱", "箱子", "treasure", "chest"]
+  },
+  {
+    "asset_key": "wooden_sword",
+    "asset_type": "item",
+    "display_name": "木剑",
+    "file_path": "assets/demo_samples/items/wooden_sword.png",
+    "keywords": ["木剑", "剑", "sword", "wooden sword"]
+  },
+  {
+    "asset_key": "magic_staff",
+    "asset_type": "item",
+    "display_name": "魔法法杖",
+    "file_path": "assets/demo_samples/items/magic_staff.png",
+    "keywords": ["法杖", "魔法法杖", "staff", "magic staff"]
+  },
+  {
+    "asset_key": "shield",
+    "asset_type": "item",
+    "display_name": "盾牌",
+    "file_path": "assets/demo_samples/items/shield.png",
+    "keywords": ["盾牌", "护盾", "shield"]
+  },
+
+  {
+    "asset_key": "grass_tile",
+    "asset_type": "tile",
+    "display_name": "草地地图块",
+    "file_path": "assets/demo_samples/tiles/grass_tile.png",
+    "keywords": ["草地", "草地地图块", "grass", "grass tile"]
+  },
+  {
+    "asset_key": "stone_road_tile",
+    "asset_type": "tile",
+    "display_name": "石路地图块",
+    "file_path": "assets/demo_samples/tiles/stone_road_tile.png",
+    "keywords": ["石路", "石头道路", "stone", "road", "stone road"]
+  },
+  {
+    "asset_key": "dirt_tile",
+    "asset_type": "tile",
+    "display_name": "泥土地块",
+    "file_path": "assets/demo_samples/tiles/dirt_tile.png",
+    "keywords": ["泥土", "土地", "dirt", "dirt tile"]
+  },
+  {
+    "asset_key": "water_tile",
+    "asset_type": "tile",
+    "display_name": "水面地图块",
+    "file_path": "assets/demo_samples/tiles/water_tile.png",
+    "keywords": ["水面", "水", "water", "water tile"]
+  },
+  {
+    "asset_key": "wall_tile",
+    "asset_type": "tile",
+    "display_name": "墙体地图块",
+    "file_path": "assets/demo_samples/tiles/wall_tile.png",
+    "keywords": ["墙体", "墙", "砖墙", "wall", "wall tile"]
+  },
+
+  {
+    "asset_key": "hp_bar",
+    "asset_type": "ui",
+    "display_name": "血条",
+    "file_path": "assets/demo_samples/ui/hp_bar.png",
+    "keywords": ["血条", "生命条", "hp", "health bar"]
+  },
+  {
+    "asset_key": "start_button",
+    "asset_type": "ui",
+    "display_name": "开始按钮",
+    "file_path": "assets/demo_samples/ui/start_button.png",
+    "keywords": ["开始按钮", "开始", "start", "play"]
+  },
+  {
+    "asset_key": "inventory_icon",
+    "asset_type": "ui",
+    "display_name": "背包图标",
+    "file_path": "assets/demo_samples/ui/inventory_icon.png",
+    "keywords": ["背包", "背包图标", "inventory", "bag"]
+  },
+  {
+    "asset_key": "pause_button",
+    "asset_type": "ui",
+    "display_name": "暂停按钮",
+    "file_path": "assets/demo_samples/ui/pause_button.png",
+    "keywords": ["暂停", "暂停按钮", "pause"]
+  },
+
+  {
+    "asset_key": "forest_background",
+    "asset_type": "background",
+    "display_name": "森林背景",
+    "file_path": "assets/demo_samples/backgrounds/forest_background.png",
+    "keywords": ["森林背景", "森林", "forest background"]
+  },
+  {
+    "asset_key": "dungeon_background",
+    "asset_type": "background",
+    "display_name": "地牢背景",
+    "file_path": "assets/demo_samples/backgrounds/dungeon_background.png",
+    "keywords": ["地牢背景", "地牢", "dungeon background"]
+  },
+  {
+    "asset_key": "village_background",
+    "asset_type": "background",
+    "display_name": "村庄背景",
+    "file_path": "assets/demo_samples/backgrounds/village_background.png",
+    "keywords": ["村庄背景", "村庄", "village background"]
+  }
+]
