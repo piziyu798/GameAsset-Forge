@@ -1,5 +1,9 @@
 # GameAsset-Forge Demo 演示脚本
 
+## Demo 视频链接
+
+【Demo: GameAsset-Forge - 哔哩哔哩】https://b23.tv/RGdSrtt
+
 ## 一、开场介绍
 
 大家好，我展示的项目是 GameAsset-Forge，一个面向学生团队和独立开发者的 2D 游戏素材生成工作台。

@@ -1,5 +1,10 @@
 # 🎮 GameAsset-Forge｜2D 游戏素材生成工作台
 
+## 🎬 Demo 视频
+
+项目演示视频：  
+【Demo: GameAsset-Forge - 哔哩哔哩】https://b23.tv/RGdSrtt
+
 GameAsset-Forge 是一个面向学生团队、独立开发者和 Game Jam 参赛者的 2D 游戏素材生成工作台。
 
 它不是一个简单的 AI 绘图页面，而是围绕 2D 游戏原型开发流程，提供从“素材需求描述、素材蓝图、风格锁定、Prompt 编排、Demo/API 生成、素材库展示、质量检查到工程化导出”的完整工作流。
